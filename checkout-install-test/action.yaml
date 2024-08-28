@@ -1,0 +1,20 @@
+name: "Checkout, Install and Test"
+description: "Faz o checkout do código, instala as dependências e roda os testes"
+runs:
+  using: "composite"
+  steps:
+    - name: Checkout
+        uses: actions/checkout@v4
+
+    - uses: actions/cache@v4
+      id: npm-cache
+      with:
+        path: node_modules
+        key: npm-cache-dir-${{ hashFiles('**/package-lock.json') }}
+
+    - name: Install dependencies
+      if: steps.npm-cache.outputs.cache-hit != 'true'
+      run: npm install
+
+    - name: Run tests
+      run: npm test
