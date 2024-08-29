@@ -1,5 +1,11 @@
 name: "Checkout, Install and Test"
 description: "Faz o checkout do código, instala as dependências e roda os testes"
+inputs:
+  use_cache:
+    description: "Utilizar cache de dependências"
+    required: false
+    default: "true"
+    type: "boolean"
 runs:
   using: "composite"
   steps:
@@ -7,6 +13,7 @@ runs:
       uses: actions/checkout@v4
 
     - uses: actions/cache@v4
+      if: inputs.use_cache == 'true'
       id: npm-cache
       with:
         path: node_modules
