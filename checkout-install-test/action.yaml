@@ -6,6 +6,10 @@ inputs:
     required: false
     default: "true"
     type: "boolean"
+outputs:
+  test_success:
+    description: "Testes passaram com sucesso"
+    value: ${{ steps.test.outcome == 'success' }}
 runs:
   using: "composite"
   steps:
@@ -25,5 +29,6 @@ runs:
       shell: bash
 
     - name: Run tests
+      id: test
       run: npm test
       shell: bash
